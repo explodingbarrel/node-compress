@@ -158,6 +158,7 @@ class Gzip : public EventEmitter {
     char* out;
     int out_size;
     int r = gzip->GzipDeflate(buf, len, &out, &out_size);
+	free(buf);
 
     if (out_size==0) {
       return scope.Close(String::New(""));
@@ -165,7 +166,7 @@ class Gzip : public EventEmitter {
 
     Local<Value> outString = Encode(out, out_size, BINARY);
     free(out);
-    return scope.Close(outString);
+	return scope.Close(outString);
   }
 
   static Handle<Value>
@@ -190,6 +191,7 @@ class Gzip : public EventEmitter {
     }
     Local<Value> outString = Encode(out, out_size, BINARY);
     free(out);
+	
     return scope.Close(outString);
 
   }
@@ -340,6 +342,7 @@ class Gunzip : public EventEmitter {
 
     Local<Value> outString = Encode(out, out_size, enc);
     free(out);
+	free(buf);
     return scope.Close(outString);
   }
 
