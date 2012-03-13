@@ -26,8 +26,12 @@ def build(bld):
 def shutdown():
   # HACK to get compress.node out of build directory.
   # better way to do this?
-  if Options.commands['clean']:
-    if exists('compress.node'): unlink('compress.node')
-  else:
-    if exists('build/default/compress.node') and not exists('compress.node'):
-      symlink('build/default/compress.node', 'compress.node')
+  try:
+  	unlink('compress.node')
+  except:
+  	print('')
+  	
+  if exists('build/Release/compress.node') and not exists('compress.node'): 
+  	symlink('build/Release/compress.node', 'compress.node')
+  if exists('build/default/compress.node') and not exists('compress.node'): 
+  	symlink('build/default/compress.node', 'compress.node')
